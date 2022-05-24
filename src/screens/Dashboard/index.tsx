@@ -1,4 +1,5 @@
 import { useNavigation } from '@react-navigation/core';
+import { StackNavigationProp } from '@react-navigation/stack';
 import React, { useRef, useState } from 'react';
 import { TextInput } from 'react-native';
 
@@ -18,11 +19,20 @@ import {
   RepositoriesList
 } from './styles';
 
+type RootStackParamList = {
+  Dashboard: undefined;
+  Repository: {
+    repositoryId: number;
+  }
+};
+
+type NavigationProps = StackNavigationProp<RootStackParamList, 'Dashboard'>;
+
 export function Dashboard() {
   const [inputText, setInputText] = useState('');
   const inputRef = useRef<TextInput>(null);
 
-  const { navigate } = useNavigation();
+  const { navigate } = useNavigation<NavigationProps>();
 
   const { addRepository, repositories } = useRepositories();
 
@@ -32,7 +42,6 @@ export function Dashboard() {
      * - call addRepository function sending inputText value;
      * - clean inputText value.
      */
-    inputRef.current?.blur();
   }
 
   function handleRepositoryPageNavigation(id: number) {
@@ -71,11 +80,11 @@ export function Dashboard() {
             <InputButton
               testID="input-button"
               onPress={handleAddRepository}
-            /**
-             * TODO - ensure to disable button when inputText is 
-             * empty (use disabled prop to this):
-             * disabled={CONDITION HERE}
-             */
+              /**
+               * TODO - ensure to disable button when inputText is 
+               * empty (use disabled prop to this):
+               * disabled={CONDITION HERE}
+               */
             >
               <Icon name="search" size={20} />
             </InputButton>

@@ -1,7 +1,7 @@
 import styled from 'styled-components/native';
 import { Feather} from '@expo/vector-icons'
-import { TextInput, FlatList } from 'react-native';
-import { RepositoryProps } from '../../hooks/useRepositories';
+import { TextInput, FlatList, FlatListProps } from 'react-native';
+import { RepositoryProps } from '../../contexts/RepositoriesProvider';
 
 export const Container = styled.View`
   flex: 1;
@@ -53,7 +53,7 @@ export const Icon = styled(Feather)`
 `;
 
 export const RepositoriesList = styled(
-  FlatList as new () => FlatList<RepositoryProps>
+  FlatList as new (props: FlatListProps<RepositoryProps>) => FlatList<RepositoryProps>
 )`
   margin-top: 64px;
 `;

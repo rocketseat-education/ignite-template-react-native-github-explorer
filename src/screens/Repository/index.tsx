@@ -93,7 +93,7 @@ export function Repository() {
                 title: issue.title,
                 subTitle: issue.user.login,
               }}
-            // TODO - onPress prop calling 
+              // TODO - onPress prop calling 
             />
           )}
         />
