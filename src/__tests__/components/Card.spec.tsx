@@ -1,9 +1,8 @@
 import React from 'react';
-import { fireEvent, render } from '@testing-library/react-native';
+import { render } from '@testing-library/react-native';
 import {
   withReanimatedTimer,
-  advanceAnimationByTime,
-  getAnimatedStyle
+  advanceAnimationByTime
 } from 'react-native-reanimated/src/reanimated2/jestUtils';
 
 import { ProvidersWrapper } from '../../../jest-utils/wrapper';
@@ -21,35 +20,42 @@ describe('Card', () => {
         }} />, {
         wrapper: ProvidersWrapper
       });
+
       const animatedView = getByTestId("repository-card");
 
       // initial animation state
       expect(
-        animatedView.props.style.transform[0].translateX
-      ).toBe(0.25 * 750);
-      expect(
-        animatedView.props.style.opacity
-      ).toBe(0);
+        animatedView
+      ).toHaveAnimatedStyle({
+        transform: [{
+          translateX: 0.25 * 750
+        }],
+        opacity: 0
+      });
 
       // middle animation state
       advanceAnimationByTime(500);
 
       expect(
-        getAnimatedStyle(animatedView).transform[0].translateX
-      ).toBe(112.236);
-      expect(
-        getAnimatedStyle(animatedView).opacity
-      ).toBe(0.40140800000000004);
+        animatedView
+      ).toHaveAnimatedStyle({
+        transform: [{
+          translateX: 90.0375
+        }],
+        opacity: 0.5198
+      });
 
       // end animation state
-      advanceAnimationByTime(600);
+      advanceAnimationByTime(500);
 
       expect(
-        getAnimatedStyle(animatedView).transform[0].translateX
-      ).toBe(0);
-      expect(
-        getAnimatedStyle(animatedView).opacity
-      ).toBe(1);
+        animatedView
+      ).toHaveAnimatedStyle({
+        transform: [{
+          translateX: 0
+        }],
+        opacity: 1
+      });
     });
   });
 });
